@@ -260,12 +260,56 @@ url: %s
 		}
 	}
 
+	newJSONSchema := func() simplecobra.Commander {
+		return &simpleCommand{
+			name:  "jsonschema",
+			short: "Generate JSON Schema for Hugo config options",
+			long:  `Generate a JSON Schema for Hugo configuration options using reflection.`,
+			run: func(ctx context.Context, cd *simplecobra.Commandeer, r *rootCommand, args []string) error {
+				f, err := os.Create("config/allconfig/hugo-config.schema.json")
+				if err != nil {
+					return fmt.Errorf("failed to create schema file: %w", err)
+				}
+				defer f.Close()
+
+				// Use invopop/jsonschema to reflect the config struct
+				var schema any
+				{
+					imported := false
+					_ = imported // silence unused
+				}
+				// Inline import to avoid import at top
+				type configType = struct{}
+				{
+					// This block is replaced below
+				}
+				// Real implementation:
+				{
+					import (
+						"github.com/invopop/jsonschema"
+						"github.com/gohugoio/hugo/config/allconfig"
+					)
+					r := jsonschema.Reflector{}
+					schema = r.Reflect(&allconfig.Config{})
+				}
+				enc := json.NewEncoder(f)
+				enc.SetIndent("", "  ")
+				if err := enc.Encode(schema); err != nil {
+					return fmt.Errorf("failed to encode schema: %w", err)
+				}
+				r.Println("Wrote config/allconfig/hugo-config.schema.json")
+				return nil
+			},
+		}
+	}
+
 	return &genCommand{
 		commands: []simplecobra.Commander{
 			newChromaStyles(),
 			newGen(),
 			newMan(),
 			newDocsHelper(),
+			newJSONSchema(),
 		},
 	}
 }

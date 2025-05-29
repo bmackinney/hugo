@@ -257,6 +257,12 @@ func TestCoverHTML() error {
 	return sh.Run(goexe, "tool", "cover", "-html="+coverAll)
 }
 
+// Generate JSON Schema for Hugo config
+func GenJSONSchema() error {
+	cmd := sh.RunCmd("./hugo", "gen", "jsonschema")
+	return cmd()
+}
+
 func runCmd(env map[string]string, cmd string, args ...any) error {
 	if mg.Verbose() {
 		return runWith(env, cmd, args...)
