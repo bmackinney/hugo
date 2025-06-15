@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "$id": "https://gohugo.io/jsonschemas/hugo-config-segments.schema.json",
+  "properties": {
+    "excludes": {
+      "items": {
+        "properties": {
+          "kind": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "lang": {
+            "type": "string"
+          },
+          "output": {
+            "type": "string"
+          }
+        },
+        "type": "object",
+        "description": "SegmentMatcherFields is a matcher for a segment include or exclude."
+      },
+      "type": "array"
+    },
+    "includes": {
+      "items": {
+        "properties": {
+          "kind": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "lang": {
+            "type": "string"
+          },
+          "output": {
+            "type": "string"
+          }
+        },
+        "type": "object",
+        "description": "SegmentMatcherFields is a matcher for a segment include or exclude."
+      },
+      "type": "array"
+    }
+  },
+  "type": "object"
+}
