@@ -622,7 +622,7 @@ type RootConfig struct {
 	PanicOnWarning bool
 
 	// The configured environment. Default is "development" for server and "production" for build.
-	Environment string
+	Environment string `jsonschema:"enum=development,enum=production"`
 
 	// The default language code.
 	LanguageCode string
@@ -669,7 +669,7 @@ type RootConfig struct {
 
 	// When using ref or relref to resolve page links and a link cannot be resolved, it will be logged with this log level.
 	// Valid values are ERROR (default) or WARNING. Any ERROR will fail the build (exit -1).
-	RefLinksErrorLevel string
+	RefLinksErrorLevel string `jsonschema:"enum=ERROR,enum=WARNING"`
 
 	// This will create a menu with all the sections as menu items and all the sections’ pages as “shadow-members”.
 	SectionPagesMenu string
@@ -692,7 +692,7 @@ type RootConfig struct {
 
 	// Set titleCaseStyle to specify the title style used by the title template function and the automatic section titles in Hugo.
 	// It defaults to AP Stylebook for title casing, but you can also set it to Chicago or Go (every word starts with a capital letter).
-	TitleCaseStyle string
+	TitleCaseStyle string `jsonschema:"enum=ap,enum=chicago,enum=go,enum=firstupper,enum=none"`
 
 	// The editor used for opening up new content.
 	NewContentEditor string
